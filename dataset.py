@@ -8,8 +8,8 @@ from random import sample
 WHITE_LEN = 4898
 RED_LEN = 1599
 ## Completed data sets
-white_wine_ds = pd.read_csv("winequality-white.csv", delimiter=";") 
-red_wine_ds = pd.read_csv("winequality-red.csv", delimiter=";")
+white_wine_ds = pd.read_csv("Data_set_completed/winequality-white.csv", delimiter=";") 
+red_wine_ds = pd.read_csv("Data_set_completed/winequality-red.csv", delimiter=";")
 
 def sample_ds(num_samples):
     """
@@ -56,6 +56,9 @@ def sample_ds(num_samples):
 
     return training_data_set, test_data_set
 
+def save_csv(dataframe, name):
+    dataframe.to_csv(name, index=True)
+
 if __name__ == '__main__':
     if sys.argv[1].lower() == "print":
         print(6*"#"+" White Wine "+6*"#"+"\n")
@@ -69,5 +72,7 @@ if __name__ == '__main__':
         print(training_data_set)
         print("\n")
         print(6*"#"+" Testing "+6*"#"+"\n")
-        print(test_data_set)       
+        print(test_data_set)
+        save_csv(training_data_set, "Usable_data_sets/training_data_set.csv")
+        save_csv(test_data_set, "Usable_data_sets/test_data_set.csv")
 
