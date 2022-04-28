@@ -2,11 +2,13 @@ import sys
 import numpy as np
 import pandas as pd
 
-data_set = pd.read_csv("Usable_data_sets/training_data_set.csv")
+identifier = sys.argv[1]
+data_set = pd.read_csv(f"Usable_data_sets/{identifier}_data_set.csv")
 data_set.rename(columns={list(data_set)[0]:"OldIndex"}, inplace=True)
 FEATURES_NAMES = list(data_set)[2:]
 COUNTER = 0
 NUM_FEATURES = 12
+NUM_SAMPLES = len(data_set)
 
 def get_values(index):
 
@@ -26,7 +28,6 @@ def normalize(lst_values):
 	return normalize_values
 
 def padding(values, num_qubits):
-	print(num_qubits**2)
 	if len(values) == num_qubits**2:
 		print("PAD não necessário")
 	else:
@@ -37,9 +38,17 @@ def padding(values, num_qubits):
 	return values_pad
 
 def main():
-	values = get_values(0)
-	values = normalize(values)
-	values = padding(values, 4)
 
+    global COUNTER
+    norm_data_set = np.empty([NUM_SAMPLES, 4**2])
+    while COUNTER < NUM_SAMPLES:
+        values = get_values(0)
+        values = normalize(values)
+        values = padding(values, 4)
+        norm_data_set[COUNTER] = values
+        COUNTER += 1
+
+    np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}.csv", norm_data_set, delimiter=";")
+    print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}.csv\"")
 if __name__ == '__main__':
 	main()
