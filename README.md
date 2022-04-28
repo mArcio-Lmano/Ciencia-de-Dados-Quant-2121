@@ -64,4 +64,27 @@ Output
 [8 rows x 13 columns]
 ```
 
-Ficheiros csv guardados na pasta ```Usable_data_sets```
+Ficheiros csv guardados na pasta ```Usable_data_sets```.
+
+
+
+
+
+
+
+
+## amplitude_encode.py
+
+Script responsavel por fazer o amplitude encode do nosso data set (usando 4 *qubits*).
+
+```
+python3 amplitude_encode.py [training|test]
+```
+
+Output:
+
+```
+Amplitude Enconding guardado em "Encode_data/amp_enc_data_set_[training|test].csv"
+```
+
+
