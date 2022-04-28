@@ -46,11 +46,11 @@ def sample_ds(num_samples):
     new_data_frame_red_test = red_wine_ds.iloc[red_wine_samples[-test_num_samples:]]
     new_data_frame_red_test.insert(0, "CLASSE", "R", True)
 
-    #Creatting TRAINING data set and shuffling
+    #Creatting TRAINING data set (WHITE+RED) and shuffling
     training_data_set = pd.concat([new_data_frame_white_training, new_data_frame_red_training])
     training_data_set = training_data_set.sample(frac=1)
 
-    #Creatting TEST data set and shuffling
+    #Creatting TEST data set (WHITE+RED) and shuffling
     test_data_set = pd.concat([new_data_frame_white_test, new_data_frame_red_test])
     test_data_set = test_data_set.sample(frac=1)
 
