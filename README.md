@@ -73,7 +73,7 @@ Ficheiros csv guardados na pasta ```Usable_data_sets```.
 
 
 
-## amplitude_encode.py
+## amplitude_encode.py  (AUTOMATIZAR MELHOR ESTE SCRIPT)
 
 Script responsavel por fazer o amplitude encode do nosso data set (usando 4 *qubits*).
 

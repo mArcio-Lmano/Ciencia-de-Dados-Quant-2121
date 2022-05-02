@@ -21,9 +21,9 @@ def get_values(index):
 
 def normalize(lst_values):
 
-	soma = sum(lst_values)
+	soma_sq = sum([x**2 for x in lst_values])
 	normalize_values = np.array(lst_values)
-	normalize_values /= soma
+	normalize_values /= np.sqrt(soma_sq)
 
 	return normalize_values
 
@@ -50,5 +50,6 @@ def main():
 
     np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}.csv", norm_data_set, delimiter=";")
     print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}.csv\"")
+
 if __name__ == '__main__':
 	main()
