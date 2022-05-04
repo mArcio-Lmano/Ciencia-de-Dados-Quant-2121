@@ -17,7 +17,12 @@ def get_values(index):
 	for i, feature in zip(range(NUM_FEATURES), FEATURES_NAMES):
 		values[i] = data_set.at[index, feature]
 
-	return values
+	if data_set.at[index, "CLASSE"] == "R":
+		classe = 1 
+	elif data_set.at[index, "CLASSE"] == "W":
+		classe = -1
+		
+	return values, classe
 
 def normalize(lst_values):
 
@@ -41,15 +46,19 @@ def main():
 
     global COUNTER
     norm_data_set = np.empty([NUM_SAMPLES, 4**2])
+    classes = np.empty([1,NUM_SAMPLES])
     while COUNTER < NUM_SAMPLES:
-        values = get_values(0)
+        values, classe = get_values(COUNTER)
         values = normalize(values)
         values = padding(values, 4)
         norm_data_set[COUNTER] = values
+        classes[0][COUNTER] = classe  
         COUNTER += 1
 
-    np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}.csv", norm_data_set, delimiter=";")
-    print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}.csv\"")
+    np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}_values.csv", norm_data_set, delimiter=";")
+    np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}_classes.csv", classes, delimiter=";")
+    print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}_values.csv\"")
+    print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}_classes.csv\"")
 
 if __name__ == '__main__':
 	main()
