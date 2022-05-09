@@ -20,7 +20,7 @@ def get_values(index):
 	if data_set.at[index, "CLASSE"] == "R":
 		classe = 1 
 	elif data_set.at[index, "CLASSE"] == "W":
-		classe = 0
+		classe = -1
 		
 	return values, classe
 
