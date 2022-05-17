@@ -44,21 +44,21 @@ def padding(values, num_qubits):
 
 def main():
 
-    global COUNTER
-    norm_data_set = np.empty([NUM_SAMPLES, 4**2])
-    classes = np.empty([1,NUM_SAMPLES])
-    while COUNTER < NUM_SAMPLES:
-        values, classe = get_values(COUNTER)
-        values = normalize(values)
-        values = padding(values, 4)
-        norm_data_set[COUNTER] = values
-        classes[0][COUNTER] = classe  
-        COUNTER += 1
+	global COUNTER
+	norm_data_set = np.empty([NUM_SAMPLES, 4**2])
+	classes = np.empty([1,NUM_SAMPLES])
+	while COUNTER < NUM_SAMPLES:
+		values, classe = get_values(COUNTER)
+		values = normalize(values)
+		values = padding(values, 4)
+		norm_data_set[COUNTER] = values
+		classes[0][COUNTER] = classe  
+		COUNTER += 1
 
-    np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}_values.csv", norm_data_set, delimiter=";")
-    np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}_classes.csv", classes, delimiter=";")
-    print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}_values.csv\"")
-    print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}_classes.csv\"")
+	np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}_values.csv", norm_data_set, delimiter=";")
+	np.savetxt(f"Encode_data/amp_enc_data_set_{identifier}_classes.csv", classes, delimiter=";")
+	print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}_values.csv\"")
+	print(f"Amplitude Enconding guardado em \"Encode_data/amp_enc_data_set_{identifier}_classes.csv\"")
 
 if __name__ == '__main__':
 	main()
