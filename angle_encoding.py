@@ -18,7 +18,6 @@ def normalize(array):
     r = array.copy()
     for i, elem in enumerate(array):
         maxi = max(elem)
-        
         for j, num in enumerate(elem):
             r[i][j] = num * np.pi / maxi
 
@@ -29,10 +28,14 @@ def main():
     classes = data_set.loc[:,["CLASSE"]].values
 
     #data_set_features_std = StandardScaler().fit_transform(data_set_features)
-    #print(data_set_features)
-    pca = PCA(n_components=PCA_num_features)
-    rdc_data_set_features = pca.fit_transform(data_set_features)
-    #print(rdc_data_set_features_std)
+    rdc_data_set_features = data_set_features.to_numpy() 
+    #if PCA_num_features != 12:
+
+    print(PCA_num_features)
+    if PCA_num_features != 12: 
+        pca = PCA(n_components=PCA_num_features)
+        rdc_data_set_features = pca.fit_transform(data_set_features)
+    print(rdc_data_set_features)
     rdc_data_set_features_std = normalize(rdc_data_set_features)
     classes_encode = [-1 if classe == "W" else 1 for classe in classes]
 
