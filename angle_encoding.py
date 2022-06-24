@@ -34,14 +34,14 @@ def main():
     data_set_features = data_set.loc[:, FEATURES_NAMES]
     classes = data_set.loc[:,["CLASSE"]].values
 
-    np_data_set_features = data_set_features.to_numpy() 
+    if PCA_num_features != 12:
+        scaler = StandardScaler()
+        scaler.fit(data_set_features)# Apply transform to both the training set and the test set.
+        norm_data_set_features = scaler.transform(data_set_features)
 
-    if PCA_num_features != 12: 
-        np_data_set_features = normalize(np_data_set_features)
-        #print(np_data_set_features)
         pca = PCA(n_components=PCA_num_features)
-        np_data_set_features = pca.fit_transform(np_data_set_features)
-
+        np_data_set_features = pca.fit_transform(norm_data_set_features)
+    
     classes_encode = [-1 if classe == "W" else 1 for classe in classes]
     np_data_set_features_std = normalize_ang(np_data_set_features)
     

@@ -2,6 +2,7 @@ import sys
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
 identifier = sys.argv[2]
 PCA_num_feature = int(sys.argv[1])
@@ -26,13 +27,6 @@ def get_values(index):
 		
 	return values, classe
 
-def normalize(array):
-    r = array.copy()
-    for i, datapoint in enumerate(array):
-        soma_sq = sum([x for x in datapoint])
-        r[i] /= soma_sq
-    return r
-
 def normalize_amp(array):
     r = array.copy()
     for i, datapoint in enumerate(array):
@@ -43,24 +37,27 @@ def normalize_amp(array):
 def padding(values, num_qubits):
     if len(values[0]) == num_qubits**2:
         print("PAD não necessário")
+        return values
     else:
+        dataset_pad = []
         for datapoint in values:
             datapoint_pad = np.zeros(num_qubits**2)
             for i in range(NUM_FEATURES):
                 datapoint_pad[i] = datapoint[i]
-            datapoint = datapoint_pad
-    return values
+            dataset_pad += [datapoint_pad]
+        return np.array(dataset_pad)
 
 def main():
     data_set_features = data_set.loc[:, FEATURES_NAMES]
     classes = data_set.loc[:, ["CLASSE"]].values
-    np_data_set_features = data_set_features.to_numpy()
-
     if PCA_num_feature**2 < 13: 
-        norm_data_set_features = normalize(np_data_set_features)
+        scaler = StandardScaler()
+        scaler.fit(data_set_features)# Apply transform to both the training set and the test set.
+        norm_data_set_features = scaler.transform(data_set_features)
+        
         pca = PCA(n_components=PCA_num_feature**2)
         np_data_set_features = pca.fit_transform(norm_data_set_features)
-        
+    
     classes_encode = [-1 if classe == "W" else 1 for classe in classes]
     np_data_set_features_std = normalize_amp(np_data_set_features)
     np_data_set_features_std = padding(np_data_set_features_std, PCA_num_feature)
